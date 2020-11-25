@@ -1,0 +1,39 @@
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New customer</title>
+    <style>
+        #customer{
+            position:absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .item{
+            margin-bottom: 10px;
+            width: auto;
+            height: auto;
+        }
+        H1{
+            position:absolute;
+            left: 50%;
+            top: 25%;
+            transform: translate(-50%,-50%);
+            font-family: "Times New Roman";
+        }
+    </style>
+    <H1>Registration new customer</H1>
+</head>
+<body>
+    <div id="customer">
+        <form method="post" th:action="@{/customer/reg}" th:object="${loginForm}">
+            <input class="item" type="text" placeholder="login" th:field="*{username}">
+            <br>
+            <input class="item" type="password" placeholder="password" th:field="*{password}">
+            <br>
+            <input class="item" type="submit" value="Registration">
+        </form>
+    </div>
+</body>
+</html>

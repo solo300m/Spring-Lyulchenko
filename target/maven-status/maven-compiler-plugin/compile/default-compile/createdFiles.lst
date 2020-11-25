@@ -1,0 +1,13 @@
+org\example\app\services\BookService.class
+org\example\app\services\LoginService.class
+org\example\web\controllers\BookShelfController.class
+org\example\app\services\NewLoginService.class
+org\example\app\services\ProjectRepository.class
+org\example\web\controllers\NewLoginController.class
+org\example\app\services\BookRepository.class
+org\example\web\controllers\RemoveFilterController.class
+org\example\web\controllers\FilterController.class
+org\example\web\controllers\LoginController.class
+org\example\web\dto\LoginForm.class
+org\example\web\dto\Book.class
+org\example\app\services\LoginRepository.class
