@@ -53,7 +53,7 @@ public class BookRepository implements ProjectRepository<Book> {
             //book.setId(book.hashCode());
             // repo.add(book);
             MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-            parameterSource.addValue("author", book.getAutor());
+            parameterSource.addValue("author",book.getAutor());
             parameterSource.addValue("title",book.getTitle());
             parameterSource.addValue("size",book.getSize());
             jdbcTemplate.update("INSERT INTO books(author,title,size) VALUES(:author, :title, :size)",parameterSource);
