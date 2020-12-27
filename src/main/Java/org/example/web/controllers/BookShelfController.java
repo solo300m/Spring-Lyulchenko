@@ -21,6 +21,8 @@ import javax.validation.constraints.NotEmpty;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 @RequestMapping(value = "/books")
@@ -36,7 +38,7 @@ public class BookShelfController {
 
     @GetMapping("/shelf")
     public String books(Model model){
-        logger.info(this.toString());
+        logger.info("Ok go");
         model.addAttribute("book",new Book());
         model.addAttribute("bookIdToRemove",new BookIdToRemove());
         model.addAttribute("bookList",bookService.getAllBooks());
@@ -140,8 +142,8 @@ public class BookShelfController {
             byte[] bytes = file.getBytes();
 
             //create dir
-            String rootPath = "C:\\";//директория домашняя сервера TomCat
-            File dir = new File(rootPath + File.separator + "enternal_inloads");//наименование конечной папки
+            String rootPath = "C:\\IdeaProjects\\MyWeb\\SergeyWEB\\src\\main\\Resorsies";//директория домашняя сервера TomCat
+            File dir = new File(rootPath + File.separator + "server_inloads");//наименование конечной папки
             //куда будут загружаться файлы
             if (!dir.exists()) {
                 dir.mkdirs();

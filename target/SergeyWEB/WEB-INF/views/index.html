@@ -31,11 +31,12 @@
 <div id="begin">
     <!--/*@thymesVar id="loginForm" type=""*/-->
     <form method ="post" th:action="@{/index/auth}" th:object="${loginForm}">
-        <label>
-            <input class="login_item" type="text" placeholder="enter username" th:field="*{username}">
-        </label>
+
+        <input class="login_item" type="text" placeholder="enter username" th:field="*{username}">
+        <p th:if="${#fields.hasErrors('username')}">Login not found</p>
         <br>
         <input class="login_item" type="password" placeholder="password" th:field="*{password}">
+        <p th:if="${#fields.hasErrors('password')}">Password is not correct</p>
         <br>
         <input class="login_item" type="submit" value="login">
         <br>

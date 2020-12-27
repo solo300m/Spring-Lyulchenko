@@ -1,11 +1,13 @@
 package org.example.web.controllers;
 
 import org.apache.log4j.Logger;
+import org.example.app.exception.BookShelfLoginException;
 import org.example.app.service.BookService;
 import org.example.web.dto.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,7 +33,7 @@ public class FilterController {
     }
 
     @GetMapping("/data")
-    public String filterData(Model model, String author, String title, Integer size){
+    public String filterData(Model model, String author, String title, Integer size)throws BookShelfLoginException {
         String aut;
         String tit;
         int siz = 0;
@@ -49,7 +51,8 @@ public class FilterController {
             siz = size;
         logger.info("Filtered bookshelf "+ aut +", "+ tit +", "+siz);
         if(aut.equals("") && tit.equals("") && siz == 0)
-            return"redirect:/filter";
+            throw new BookShelfLoginException("Filter is NULL");
+            //return"redirect:/filter";
         else {
             model.addAttribute("book", new Book());
             model.addAttribute("bookList", bookService.getFilteredBooks(aut, tit, siz));
@@ -60,5 +63,11 @@ public class FilterController {
     @GetMapping("/books")
     public String cancelFilter(){
         return"redirect:/books/shelf";
+    }
+
+    @ExceptionHandler(BookShelfLoginException.class)
+    public String handlerError(Model model, BookShelfLoginException exception){
+        model.addAttribute("errorMessage",exception.getMessage());
+        return"errors/404";
     }
 }

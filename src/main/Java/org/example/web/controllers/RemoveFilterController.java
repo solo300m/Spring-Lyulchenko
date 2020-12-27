@@ -1,14 +1,19 @@
 package org.example.web.controllers;
 
 import org.apache.log4j.Logger;
+import org.example.app.exception.BookShelfLoginException;
 import org.example.app.service.BookService;
 import org.example.web.dto.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value = "remove_filter")
@@ -30,7 +35,7 @@ public class RemoveFilterController {
         return "group_remove_book";
     }
     @PostMapping("/data")
-    public String dataRemoveFilter(String author, String title, Integer size){
+    public String dataRemoveFilter(String author, String title, Integer size)throws BookShelfLoginException{
         String aut;
         String tit;
         int siz = 0;
@@ -47,8 +52,13 @@ public class RemoveFilterController {
         else
             siz = size;
         logger.info("remove to filter "+ aut +", "+ tit +", "+siz);
-        if(aut.equals("") && tit.equals("") && siz == 0)
-            return"redirect:/remove_filter";
+        if(aut.equals("") && tit.equals("") && siz == 0) {
+            //if (bindingResult.hasErrors()) {
+                logger.info("All fields are Null!");
+                throw new BookShelfLoginException("All fields are NULL!");
+                //return "redirect:/remove_filter";
+            //}
+        }
         if(bookService.removeFilterBook(aut,tit,siz) != 0)
             return"redirect:/books/shelf";
         else
@@ -58,6 +68,12 @@ public class RemoveFilterController {
     @GetMapping("/books")
     public String cancelFilter(){
         return"redirect:/books/shelf";
+    }
+
+    @ExceptionHandler(BookShelfLoginException.class)
+    public String handlerError(Model model, BookShelfLoginException exception){
+        model.addAttribute("errorMessage",exception.getMessage());
+        return"errors/404";
     }
 }
 

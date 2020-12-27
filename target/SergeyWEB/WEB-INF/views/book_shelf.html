@@ -43,7 +43,7 @@
         H1{
             position: absolute;
             left: 50%;
-            top: 25%;
+            top: 15%;
             transform: translate(-40%,-250%);
             font-family: "Times New Roman";
         }
@@ -104,6 +104,7 @@
         </table>
     </form>
 
+    <h2>Uploading a file to the server</h2>
     <form method="post" th:action="@{/books/uploadFile}" enctype="multipart/form-data">
         <table>
             <tr>
@@ -116,6 +117,7 @@
             </tr>
         </table>
     </form>
+    <h2>Uploading a file from the server to the project</h2>
     <form method="post" th:action="@{/books/inloadFile}" enctype="multipart/form-data">
         <table>
             <tr>

@@ -47,7 +47,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/index")
                 .loginProcessingUrl("/index/auth")
                 .defaultSuccessUrl("/books/shelf", true)
-                .failureUrl("/index");
+                .failureUrl("/errors/error_identification");
     }
 
     @Override

@@ -1,11 +1,12 @@
 package org.example.web.dto;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class LoginForm {
-    @NotEmpty
+    @NotNull
     public String username;
-    @NotEmpty
+    @NotNull
     public String password;
 
     public LoginForm(String username, String password) {

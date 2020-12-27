@@ -7,9 +7,13 @@ import org.example.app.exception.BookShelfLoginException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value="/index")
@@ -29,15 +33,25 @@ public class BeginController {
     }
 
     @PostMapping("/auth")
-    public String authenticate(LoginForm loginForm) throws BookShelfLoginException {
-        if(loginService.authenticate(loginForm)){
-            logger.info("login OK redirect to book shelf");
-            return "redirect:/books/shelf";
-        }
-        else{
-            logger.info("login FAIL redirect back to login");
-            //throw new BookShelfLoginException("invalid username or password");
-            return "redirect:/index";
-        }
+    public String authenticate(LoginForm loginForm) throws BookShelfLoginException{
+//        if(bindingResult.hasErrors()) {
+            if (loginService.authenticate(loginForm)) {
+                logger.info("login OK redirect to book shelf");
+                return "redirect:/books/shelf";
+            } else {
+                logger.info("login FAIL redirect back to login");
+                throw new BookShelfLoginException("invalid username or password");
+                //return "redirect:/index";
+            }
+//        }
+//        else{
+//            logger.info("bed login");
+//            return "redirect:/index";
+//        }
+    }
+    @ExceptionHandler(BookShelfLoginException.class)
+    public String handlerError(Model model, BookShelfLoginException exception){
+        model.addAttribute("errorMessage",exception.getMessage());
+        return"errors/error_identification";
     }
 }
